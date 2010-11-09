@@ -37,24 +37,29 @@ $.include.plugins.html = function(){
 	} 
 	// Template object with section's support
 	//---------------------------------------
-	function CoreTemplate( a_string ){
+	function createTemplate( a_string ){
 		// parse sections...
         var x = a_string.split( /<%@(.+?)%>/ );
 
+		function template( a_data ){
+			return template.__default_section( a_data );
+		}
+		
 		// parse default section...
-		var defaultSection = x[ 0 ];
-		if( defaultSection)
+		template.__default_section = compileSection( x[ 0 ] );
 		
 		// for each section...
-        for( var i = x.length % 2; i < x.length; i += 2 ){
+        for( var i = 1; i < x.length; i += 2 ){
 
 			// create template function...
-            var template_f = compileSection( x[ i + 1 ] );
+            var section_f = compileSection( x[ i + 1 ] );
 
 			// add section template to the object... 
             var name       = x[ i ].replace( /^\s*/, "").replace( /\s*$/, "" );
-            this[ name ]   = template_f;
+            template[ name ] = section_f;
         }
+
+		return template;
     }
     
 	// Define core templates plug-in...
@@ -83,11 +88,11 @@ $.include.plugins.html = function(){
 	}
 	
 	PlugIn.prototype.content = function( a_text ){		
-       	return new CoreTemplate( mustache2asp( a_text ) );
+       	return createTemplate( mustache2asp( a_text ) );
 	};
 	
 	// make core template functionality available for other plug-ins...
-	PlugIn.CoreTemplate   = CoreTemplate;
+	PlugIn.compileModule  = createTemplate;
 	PlugIn.compileSection = compileSection;
 	PlugIn.mustache2asp   = mustache2asp;
 	return PlugIn;
