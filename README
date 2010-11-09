@@ -1,0 +1,54 @@
+What is it?
+===========
+include.js is javascript library, intended to simplify development of ajax and offline web applications.
+
+It provides comprehensive asynchronous modules API working in web browser, supporting JavaScript *and* first-class client-side HTML template modules.
+
+It's compact and extensible. Developers can add they own custom module content types using clean and simple plug-ins API.
+
+include.js relies on excellent require.js library as the backend. It means, that it's backward compatible with CommonJS and require.js modules.
+
+Why?
+====
+In short - because it's great to feel the kind of PHP development simplicity when working in browser.
+
+Development of ajax and offline web applications is painful. Such application lives in the single HTML page, and there are no any standard way to hierarchically decompose large application to the number of small and reusable building blocks, incorporating parts of HTML *and* related JS.
+
+<script> tags allows JS file inclusions, but they are unaware of dependencies.
+
+There are module systems, based on CommonJS. And, have you looked at their API? It looks like anything, but not module specifications. And they are unaware of HTML templates, which is one natural module types.
+
+There are dozens of JS templating libraries, but they are unaware of modules, templates are not files, and they can't be a part of module's dependency tree.
+
+Frameworks like Dojo solve these problem, but they have quite tough learning curve.
+
+I believe that there are no real reasons for things to be so complicated. That's why I have created this library.
+
+Please, show me the code!
+=========================
+
+$.include(
+	'plain.script.js', // load plain .js script.
+	'jquery.widget.definition.js', // load plain .js script in parallel with previous one.
+	[ 'one.js', 'tho.js', 'three.js' ], // load these three .js scripts in listed order.
+	{// this is module context & dependency declaration.
+		some_module : 'logic/module', // JS module. Just like this one.
+		some_other_module : 'logic/other',
+		html : 'template.html' // HTML template will be loaded & compiled to the JS function.
+	}
+).define( function( _ ){ // this function will be called with context, filled with actual values
+	_.export = function( a_events ){
+		var x = _.some_module( _.some_other_module );
+		var $this = $( _.html( x ) ); 
+		$this.find( 'button.ok' ).click( a_events.on_ok );
+		return $this; 	
+	}
+});
+
+Does it actually work?
+======================
+Yes and no. Yes, the previous version of library perfectly works in complex application.
+
+But here is the development snapshot if new, completely rewritten version. It's highly unstable. So, if you like an idea, you're welcome to experiment with it, report bugs, suggest improvements, and write plug-ins.
+
+I need one week or so in order to make it reliable.
