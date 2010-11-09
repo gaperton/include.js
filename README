@@ -67,7 +67,7 @@ require.js:
 		});
 		
 include.js:
-	include({
+	$.include({
 		first  : 'mod/one',
 		second : 'mod/two',
 		third  : 'mod/three'
@@ -83,7 +83,7 @@ require.js:
 	});
 
 include.js:
-	include(
+	$.include(
 		"a.js",
 		"b.js",
 		{
@@ -99,7 +99,7 @@ require.js: // load three modules in order...
 	});
 
 include.js:
-	include(
+	$.include(
 		[ "one.js", "two.js", "three.js" ], // feel the difference?
 		{
 			module : "some/module" // and you still can do this.
