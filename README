@@ -51,4 +51,68 @@ Yes and no. Yes, the previous version of library perfectly works in complex appl
 
 But here is the development snapshot if new, completely rewritten version. It's highly unstable. So, if you like an idea, you're welcome to experiment with it, report bugs, suggest improvements, and write plug-ins.
 
-I need one week or so in order to make it reliable.
+I need one week or so in order to test it and make it stable.
+
+Current Features
+================
+Since include.js is wrapper on top of require.js, it can include require.js modules. However, it adds a number of improvements in usability...
+
+1. Better API for require.js functionality 
+------------------------------------------
+require.js:
+	require( [ 'mod/one', 'mod/two', 'mod/three' ],
+		function( first, second, third ){ // try to make a change in this dependency list without mistake.
+			...
+			return what_we_have_defined; // there are the mess of 'returns' in JS code - which one is export?
+		});
+		
+include.js:
+	include({
+		first  : 'mod/one',
+		second : 'mod/two',
+		third  : 'mod/three'
+	})
+	.define( function( _ ){
+		// you can refer to dependencies as _.first, _.second, _.third
+		_.exports = what_we_have_defined; // you may use this instead of return.
+	});
+
+require.js: 
+	require(["a.js", "b.js", "some/module"], function() { // Loading mix of plain .js files and 'modules'.
+	    //interesting detail - what will happen with our module arguments? Have an idea?
+	});
+
+include.js:
+	include(
+		"a.js",
+		"b.js",
+		{
+			module : "some/module"
+		}
+	).define( function( _ ){
+		// In this case it's clear, isn't it?
+	});
+	
+require.js: // load three modules in order...
+	require(["order!one.js", "order!two.js", "order!three.js"], function () {
+	    //This callback is called after the three scripts finish loading.
+	});
+
+include.js:
+	include(
+		[ "one.js", "two.js", "three.js" ], // feel the difference?
+		{
+			module : "some/module" // and you still can do this.
+		}
+	).define( function( _ ){
+		//...
+	});
+
+Yep, require.js is really the great library. Unfortunately, I can't use their API. Thingers refuse to type, man. :)
+
+More features description coming soon... 
+----------------------------------------
+
+Planned Features
+================
+Coming soon...
