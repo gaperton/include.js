@@ -119,3 +119,13 @@ $.include = function() {
 	
 	return include;
 }();
+
+$.define = function( a_body_f ){
+	function on_load(){
+		var _context = { exports: {} };
+	    var res = a_body_f( _context );
+	    return res ? res : _context.exports;		
+	}
+	
+	return define( a_body_f );
+};

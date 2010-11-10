@@ -12,7 +12,6 @@
 // Please, do NOT add more template markup to this plug-in.
 // It's intended to be the base for other plug-ins. 
 
-// TODO: add default section support!
 $.include.plugins.html = function(){
 	// ASP-style template compiler
 	//------------------------------------
@@ -31,10 +30,6 @@ $.include.plugins.html = function(){
 
         return new Function( "_$1,$2,$3", fun );
     }
-    
-	function renderTo_f( $this, a_context ){
-		return $this.html( this( a_context ) );
-	}
 	
 	function trim_spaces( a_string ){
 		return a_string.replace( /^\s*/, "").replace( /\s*$/, "" );
@@ -48,17 +43,21 @@ $.include.plugins.html = function(){
 		function template( a_data ){
 			return template.__default_section( a_data );
 		}
+	
+		function render_f( $this, a_context ){
+			return $this.html( this.call( template, a_context ) );
+		}
 		
 		// parse default section...
 		template.__default_section = compileSection( x[ 0 ] );
-		template.renderTo = renderTo_f;
+		template.renderTo = render_f;
 		
 		// for each section...
         for( var i = 1; i < x.length; i += 2 ){
 
 			// create template function...
             var section_f = compileSection( x[ i + 1 ] );
-			section_f.renderTo = renderTo_f;
+			section_f.renderTo = render_f;
 			
 			// add section template to the object... 
             var name       = x[ i ].replace( /^\s*/, "").replace( /\s*$/, "" );
@@ -90,7 +89,7 @@ $.include.plugins.html = function(){
 		return a_text
 				.replace( /{--(.+?)--}/g, "<%@$1%>" )
 				.replace( /{-(.+?)-}/g, "<%$1%>" )
-				replace( /{{(.+?)}}/, "<%=$1%>" );
+				.replace( /{{(.+?)}}/g, "<%=$1%>" );
 	}
 	
 	PlugIn.prototype.content = function( a_text ){		
@@ -103,3 +102,10 @@ $.include.plugins.html = function(){
 	PlugIn.mustache2asp   = mustache2asp;
 	return PlugIn;
 }();
+
+// Initial jQuery support for templates.
+// $( something ).render( templateOrSection, context )
+// should render template in the given context inside given jQuery element.
+$.fn.render = function( a_template, a_data ){
+	return a_template.renderTo( this, a_data );
+}
