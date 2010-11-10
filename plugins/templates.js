@@ -32,6 +32,10 @@ $.include.plugins.html = function(){
         return new Function( "_$1,$2,$3", fun );
     }
     
+	function renderTo_f( $this, a_context ){
+		return $this.html( this( a_context ) );
+	}
+	
 	function trim_spaces( a_string ){
 		return a_string.replace( /^\s*/, "").replace( /\s*$/, "" );
 	} 
@@ -47,13 +51,15 @@ $.include.plugins.html = function(){
 		
 		// parse default section...
 		template.__default_section = compileSection( x[ 0 ] );
+		template.renderTo = renderTo_f;
 		
 		// for each section...
         for( var i = 1; i < x.length; i += 2 ){
 
 			// create template function...
             var section_f = compileSection( x[ i + 1 ] );
-
+			section_f.renderTo = renderTo_f;
+			
 			// add section template to the object... 
             var name       = x[ i ].replace( /^\s*/, "").replace( /\s*$/, "" );
             template[ name ] = section_f;
