@@ -71,8 +71,8 @@ $.include.plugins.html = function(){
 		if( $.include.settings && $.include.settings.html ){
 			_root = $.include.settings.html.root;
 		}
-
-		//TODO: set extension to .html if not present
+		
+		
 		var _path = "text!" + _root + a_path;
 		
 		this.path = function(){ return _path; }
