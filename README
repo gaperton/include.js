@@ -1,5 +1,7 @@
 STATUS: It should be reasonably stable now. I have tested it in my production project (haml support have not been tested). To see the description of Core Templates, please open core templates.html. It's basic example and introduction.
 
+USAGE: To start evaluating the library - just replace your jquery.min.js with include-bootstrap.js from the root directory.
+
 I will add more tests, programming examples, and update docs later.
 
 What is it?
