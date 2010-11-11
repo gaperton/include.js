@@ -1,4 +1,6 @@
-STATUS: It should be reasonably stable now. I have tested it in my production project (haml support have not been tested). To see the description of Core Templates, please execute test.html. I will add tests, programming examples, and update docs later.
+STATUS: It should be reasonably stable now. I have tested it in my production project (haml support have not been tested). To see the description of Core Templates, please open core templates.html. It's basic example and introduction.
+
+I will add more tests, programming examples, and update docs later.
 
 What is it?
 ===========
