@@ -444,6 +444,7 @@ $.include.plugins.html = function(){
 	//-------------------------------------------
 	function mustache2asp( a_text ){
 		return a_text
+				.replace( /[\r\t\n]/g, " " )
 				.replace( /{--(.+?)--}/g, "<%@$1%>" )
 				.replace( /{-(.+?)-}/g, "<%$1%>" )
 				.replace( /{{(.+?)}}/g, "<%=$1%>" );
