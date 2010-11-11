@@ -1,5 +1,4 @@
-Please, hold on... Critical errors found.
-UPD: Should be ok now, but you have warned. This is APLHA release. Please, wait 1-2 days until I test it in my project.
+STATUS: It should be reasonably stable now. I have tested it in my production project (haml support have not been tested). I will add tests, programming examples, and update docs later today.
 
 What is it?
 ===========
