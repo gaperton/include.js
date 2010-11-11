@@ -1,4 +1,4 @@
-STATUS: It should be reasonably stable now. I have tested it in my production project (haml support have not been tested). I will add tests, programming examples, and update docs later today.
+STATUS: It should be reasonably stable now. I have tested it in my production project (haml support have not been tested). To see the description of Core Templates, please execute test.html. I will add tests, programming examples, and update docs later.
 
 What is it?
 ===========
