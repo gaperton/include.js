@@ -1,4 +1,94 @@
-<%@ main %>
 <h1>
-Hello World!
-</h2>
+This is the template. 
+</h1>
+<h2> The basics </h2>
+<p> Include.js Core Templates plugin support simple yet comprehensive template language, based on JavaScript inlining. You can use two templating tag styles - "mustache" and "ASP-style".</p>
+
+Here's a list of Core Templates tags:
+{{ this.core_tags( $1, tags ) }}
+Yep, that's it. By the way, the table above is generated with these tags, and is the test. Please, take a look inside html/main.html
+
+You include template with name 'html', and it gets automatically compiled to JS function. You can call this function in your code with context object, and it will evaluate template with its embeeded JS in the given context, and return text. That's simple. Like this:
+
+<pre>
+var html = _.html( { a: 5, b: "dsdsd" } );
+</pre>
+
+Or, if you're using jQuery, you can do this:
+
+<pre>
+_.html.renderTo( $('#holder'), { a: 5, b: "dsdsd" } ).click( function(){ alert('Yahooo!');});
+</pre>
+
+Or this:
+
+<pre>
+$('#holder').render( _.html, { a: 5, b: "dsdsd" } ).click( function(){ alert('Yahooo!');});
+</pre>
+
+And template will be rendered to #holder tag, erasing all previously existing inner HTML. And that's it.
+
+Oh, year, there are third tag, which represent the most interesting feature of Core Templates. Sections.
+
+<h2> Sections </h2>
+Section - it's just the named subtemplate declaration you can put in you document, and use it from main section, or JS module. Or from the other section. Sections allow you to split large HTML document to the number of reusable parts. How it looks like? Well, have you opened this template (html/main.html)? :) It's good example.
+
+Defining section is easy.
+{{ this.core_tags( $1, sections ) }}
+
+Sections are translated to template functions in _.html namespace. For example, table with tags above can be accessible as _.html.core_tags from .js file, or - as this.core_tags from inside of this template.
+
+When you want to directly inline section in the template, you need to pass parameters to this function call. First parameter is context, and it can be referred as $1. In addition, you can pass secons $2 and third $3 parameters. 
+
+Sections are extremily useful feature. Some use cases:
+<ol>
+	<li>Fight the complexity of deep HTML trees. In case if HTML tree becomes hard to understand, you can take parts out of it and move them to the sections.</li>
+	<li>Similar patterns in the document. Move them to the sections, and you will remove the pain. </li>
+</ol>
+
+<h2> Rationale </h2>
+{{ this.why_such_templates( $1 ) }}
+
+{-- core_tags --}
+<table>
+{- for( var i in $2 ){-}
+	<% var tag = $2[ i ]; %>
+<tr>
+	<td> {{ tag.desc }} <td>
+	<td> <%= tag.mustache %> <td>
+	<td> {{ $2[ i ].asp }} <td>
+</tr>	
+{-}-}	
+</table>
+
+{-- why_such_templates --}
+<p>Now let me explain, why templates looks like they looks:</p>
+<ol>
+	<li>I believe that there's no real reason to introduce templating DSLs, while we have JS already. 
+		<ol>
+		<li>JS have necessary control structures.</li>
+		<li>JS is more powerful, than any of templating DSLs. With emedded JS capabilities you're sure, that you can do  _everything_ you need.</li>
+		<li>Templates with embedded JS can be easily compiled to JS, and they are FAST</li>
+		<li>And there's one important thing - you already know and unrestand JS, and there's nothing to learn.</li>
+		</ol>
+	</li>
+	
+	<li>You might have different point of view - and that's fine. I suspected that, and specially designed the system in the way, allowing you to easily extend templating system. I mean, it's _really_ easy.
+		<ol>
+		<li>All 'smart' content modules are handled through plug-ins</li>
+		<li>Core Templates itself is the plugin.</li>
+		<li>Plugins can call each other</li>
+		<li>You can translate your favorite template syntax to Core Templates one, and pass the result to 'html' plugin, to do the rest of magic.</li>
+		<li>???</li>
+		<li>PROFIT! Actually, this is the major reason for Core Templates to be minimalistic. It's degined to be the basis for more complicated templating DSLs.</li>	
+		</ol>
+	</li>
+	
+	<li> Why I's using so strange JS-inline tags in 'mustache' case? It's so complicated to count JS backets when inserting if-s and for-s...
+		<ol>
+		<li> Because I hate counting brackets. You don't need to do it with mustache style.</li>
+		<li> The right way - <b>to count {{ block }} and {{end}} patterns</b>. Its so easy, that when you get used to it, you will not need DSLs, cause embedded JS will looks just fine.</li>
+		</ol>
+	</li>
+</ol>
+
