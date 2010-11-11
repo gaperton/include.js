@@ -1,0 +1,32 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+   "http://www.w3.org/TR/html4/loose.dtd">
+
+<html lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<title>Include.js test</title>
+	<meta name="author" content="Vlad Balin">
+	<script type="text/javascript" src="lib/requireplugins-jquery-1.4.3.js"></script>
+	<script type="text/javascript" src="include.js"></script>
+	<script type="text/javascript" src="plugins/templates.js"></script>
+	
+	<script type="text/javascript">
+	
+	// This is config object.
+	$.include.settings = {
+	    baseUrl : "/include.js", // set path to the project's web root here...
+		html : { root: "html/" } // html templates root directory...
+	};
+
+	$.include({
+		view : 'views/main' // include view/main module...
+	})
+	.main( function( _ ){
+		_.view( $('body') ); // view/main exports the function. Let's call this function.
+	});	
+	</script>
+</head>
+<body>
+
+</body>
+</html>
