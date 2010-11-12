@@ -38,7 +38,10 @@ $.include = function() {
 				
 				// assign value to the context...
 				if( a_subname ){
-					_context[ a_name ][ a_subname ] = value;	
+                    if( !_context[ a_name ] ){
+                        _context[ a_name ] = {};
+                    }
+                    _context[ a_name ][ a_subname ] = value;
 				}else{
 					_context[ a_name ] = value;
 				}				
