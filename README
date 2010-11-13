@@ -43,7 +43,7 @@ First - see an example. This example show you complete explanation of core templ
 
 In order to evaluate it in your jquery project you need to include 'include-bootstrap' instead of your jquery.min.js, and read an exampe in order to understand, how to start the library.
 
-Don't panic, and say 'hello' to complicated frameworks. It's is not this case. The code is really short, friendly, and easy to read.  
+Don't panic, and say 'bye' to complicated frameworks. It's is not this case. The code is really short, friendly, and easy to read.  
 
 Why?
 ====
