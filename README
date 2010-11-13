@@ -19,7 +19,7 @@ Features didgest
 - TODO: CSS files. I can add templating capabilities to CSS content too, if you request.
 - TODO: Inline CSS in HTML Temapltes.
 5. Straightforward MVC pattern impementation, allowing to decompose your AJAX application into hierarchy of HTML+JS(+CSS) components. In case you're looking for the way to do MVC - this is an easies way ever.
-6. jQuery support. You can think of include.js as of the easy way to define more advanced widgets:
+6. jQuery support. You can think of include.js as an easy way to define more advanced widgets:
 
 $.include({
     html: "my_template.html" // include template from file...
