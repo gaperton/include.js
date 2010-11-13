@@ -37,29 +37,6 @@ $.include({
 
 It's said, that Dojo Toolikit have better instruments for writing large AJAX applications, than jQuery. What I could say, as an author of large-scale inhouse jQuery ajax application? That used to be true, until the moment of include.js release.
 
-How can I try it?
-=================
-First - see an example. This example show you complete explanation of core templates language, if you execute it. Just put the files in include.js directory under your web root, and open 'core templates.html'.
-
-In order to evaluate it in your jquery project you need to include 'include-bootstrap' instead of your jquery.min.js, and read an exampe in order to understand, how to start the library.
-
-Don't panic, and say 'bye' to complicated frameworks. It's is not this case. The code is really short, friendly, and easy to read.  
-
-Why?
-====
-In short - because it's great to feel the kind of PHP development simplicity when working in browser.
-
-Development of ajax and offline web applications is painful. Such application lives in the single HTML page, and there are no any standard way to hierarchically decompose large application to the number of small and reusable building blocks, incorporating parts of HTML *and* related JS.
-
-<script> tags allows JS file inclusions, but they are unaware of dependencies.
-
-There are module systems, based on CommonJS. And, have you looked at their API? It looks like anything, but not module specifications. And they are unaware of HTML templates, which is one natural module types.
-
-There are dozens of JS templating libraries, but they are unaware of modules, templates are not files, and they can't be a part of module's dependency tree.
-
-Frameworks like Dojo solve these problem, but they have quite tough learning curve.
-
-I believe that there are no real reasons for things to be so complicated. That's why I have created this library.
 
 Comparison with require.js API
 ==============================
@@ -116,3 +93,28 @@ Yep, require.js is really the great library. Unfortunately, I can't use their AP
 
 That was basic API. features description coming soon... 
 -------------------------------------------------------
+
+
+How can I try it?
+=================
+First - see an example. This example show you complete explanation of core templates language, if you execute it. Just put the files in include.js directory under your web root, and open 'core templates.html'.
+
+In order to evaluate it in your jquery project you need to include 'include-bootstrap' instead of your jquery.min.js, and read an exampe in order to understand, how to start the library.
+
+Don't panic, and say 'bye' to complicated frameworks. It's is not this case. The code is really short, friendly, and easy to read.  
+
+Why?
+====
+In short - because it's great to feel the kind of PHP development simplicity when working in browser.
+
+Development of ajax and offline web applications is painful. Such application lives in the single HTML page, and there are no any standard way to hierarchically decompose large application to the number of small and reusable building blocks, incorporating parts of HTML *and* related JS.
+
+<script> tags allows JS file inclusions, but they are unaware of dependencies.
+
+There are module systems, based on CommonJS. And, have you looked at their API? It looks like anything, but not module specifications. And they are unaware of HTML templates, which is one natural module types.
+
+There are dozens of JS templating libraries, but they are unaware of modules, templates are not files, and they can't be a part of module's dependency tree.
+
+Frameworks like Dojo solve these problem, but they have quite tough learning curve.
+
+I believe that there are no real reasons for things to be so complicated. That's why I have created this library.
