@@ -4,7 +4,7 @@ include.js is javascript library, intended to simplify development of ajax and o
 
 Yes, you can include plain JS files, JS modules without garbaging global namespace, HTML templates, HAML templates (not tested), and (soon) CSS files.
 
-And - it can include any custom content you want if you write corresponding plug-in. HTML Templates support is written as plugin, so you already have an example. And, yes - plugins can call each other, so it's _really_ easy to write support for your own templating engine.
+And - it can include any custom content you want if you write corresponding plug-in. HTML Templates support is written as plugin, so you already have an example. And, yes - plugins can call each other, so it's _really_ easy to write support for your own templating engine, which you wanted but afraid to implement. Just compile your language to ASP Core Templates style (which is easy to do with .replace), and that's it. 
 
 include.js relies on excellent require.js library as the backend.
 
