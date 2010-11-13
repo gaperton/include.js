@@ -16,7 +16,7 @@ Features didgest
 4. Plug-ins included:
 - HTML Templates, supporting ASP and mustache style tags, and JS embedding.
 - HAML Templates. I'm using github implementation, and it have not been tested yet. But - it was straightforward to add.
-- TODO: CSS files. I can add templating capabilities to the, too, if you request.
+- TODO: CSS files. I can add templating capabilities to CSS content too, if you request.
 - TODO: Inline CSS in HTML Temapltes.
 5. Straightforward MVC pattern impementation, allowing to decompose your AJAX application into hierarchy of HTML+JS(+CSS) components. In case you're looking for the way to do MVC - this is an easies way ever.
 6. jQuery support. You can think of include.js as of the easy way to define more advanced widgets:
