@@ -1,18 +1,49 @@
-STATUS: It should be reasonably stable now. I have tested it in my production project (haml support have not been tested). To see the description of Core Templates, please open core templates.html. It's basic example and introduction.
-
-USAGE: To start evaluating the library - just replace your jquery.min.js with include-bootstrap.js from the root directory.
-
-I will add more tests, programming examples, and update docs later.
-
 What is it?
 ===========
-include.js is javascript library, intended to simplify development of ajax and offline web applications.
+include.js is javascript library, intended to simplify development of ajax and offline web applications. It makes MVC-pattern trivial, and provides widely wanted browser-side 'include' directive. It's using approach which is different from common MVC frameworks, and its approach is a lot easier to understand and use. It relies on dynamically loadable modules, and HTML templates is the first-class module type.
 
-It provides comprehensive asynchronous modules API working in web browser, supporting JavaScript *and* first-class client-side HTML template modules.
+Yes, you can include plain JS files, JS modules without garbaging global namespace, HTML templates, HAML templates (not tested), and (soon) CSS files.
 
-It's compact and extensible. Developers can add they own custom module content types using clean and simple plug-ins API.
+And - it can include any custom content you want if you write corresponding plug-in. HTML Templates support is written as plugin, so you already have an example. And, yes - plugins can call each other, so it's _really_ easy to write support for your own templating engine.
 
-include.js relies on excellent require.js library as the backend. It means, that it's backward compatible with CommonJS and require.js modules.
+include.js relies on excellent require.js library as the backend.
+
+Features didgest
+================
+1. Complete backward compatibility with CommonJS Asynchronous modules, packages, and require.js modules. Since it;s based on require.js.
+2. New module API, which is far easier to understand and use than original require.js one. Module definitions looks like module definitions, and inclide looks like traditional include.
+3. Plig-in API for custom modules with content of any type.
+4. Plug-ins included:
+- HTML Templates, supporting ASP and mustache style tags, and JS embedding.
+- HAML Templates. I'm using github implementation, and it have not been tested yet. But - it was straightforward to add.
+- TODO: CSS files. I can add templating capabilities to the, too, if you request.
+- TODO: Inline CSS in HTML Temapltes.
+5. Straightforward MVC pattern impementation, allowing to decompose your AJAX application into hierarchy of HTML+JS(+CSS) components. In case you're looking for the way to do MVC - this is an easies way ever.
+6. jQuery support. You can think of include.js as of the easy way to define more advanced widgets:
+
+$.include({
+    html: "my_template.html" // include template from file...
+})
+.define( function( _ ){ // define module...
+    _.exports = function widget( $this, a_data, a_events ){ // exporting function...
+        _.html.renderTo( $this, a_data ); // which expands template inside of $this.
+
+        $this.find( "#ok").click( a_events.on_click ); // throw event up to the caller...
+        $this.find( "#refresh").click( function(){
+            widget( $this, a_data, a_events ); // ...and update ourself. Yep, in that easy way.
+        });
+    }
+});
+
+It's said, that Dojo Toolikit have better instruments for writing large AJAX applications, than jQuery. What I could say, as an author of large-scale inhouse jQuery ajax application? That used to be true, until the moment of include.js release.
+
+How can I try it?
+=================
+First - see an example. This example show you complete explanation of core templates language, if you execute it. Just put the files in include.js directory under your web root, and open 'core templates.html'.
+
+In order to evaluate it in your jquery project you need to include 'include-bootstrap' instead of your jquery.min.js, and read an exampe in order to understand, how to start the library.
+
+Don't panic, and say 'hello' to complicated frameworks. It's is not this case. The code is really short, friendly, and easy to read.  
 
 Why?
 ====
@@ -30,41 +61,8 @@ Frameworks like Dojo solve these problem, but they have quite tough learning cur
 
 I believe that there are no real reasons for things to be so complicated. That's why I have created this library.
 
-Please, show me the code!
-=========================
-
-$.include(
-	'plain.script.js', // load plain .js script.
-	'jquery.widget.definition.js', // load plain .js script in parallel with previous one.
-	[ 'one.js', 'tho.js', 'three.js' ], // load these three .js scripts in listed order.
-	{// this is module context & dependency declaration.
-		some_module : 'logic/module', // JS module. Just like this one.
-		some_other_module : 'logic/other',
-		html : 'template.html' // HTML template will be loaded & compiled to the JS function.
-	}
-).define( function( _ ){ // this function will be called with context, filled with actual values
-	_.export = function( a_events ){
-		var x = _.some_module( _.some_other_module );
-		var $this = $( _.html( x ) ); 
-		$this.find( 'button.ok' ).click( a_events.on_ok );
-		return $this; 	
-	}
-});
-
-Does it actually work?
-======================
-Yes and no. Yes, the previous version of library perfectly works in complex application.
-
-But here is the development snapshot if new, completely rewritten version. It's highly unstable. So, if you like an idea, you're welcome to experiment with it, report bugs, suggest improvements, and write plug-ins.
-
-I need one week or so in order to test it and make it stable.
-
-Current Features
-================
-Since include.js is wrapper on top of require.js, it can include require.js modules. However, it adds a number of improvements in usability...
-
-1. Better API for require.js functionality 
-------------------------------------------
+Comparison with require.js API
+==============================
 require.js:
 	require( [ 'mod/one', 'mod/two', 'mod/three' ],
 		function( first, second, third ){ // try to make a change in this dependency list without mistake.
@@ -116,9 +114,5 @@ include.js:
 
 Yep, require.js is really the great library. Unfortunately, I can't use their API. Fingers refusing to type, man. :)
 
-More features description coming soon... 
-----------------------------------------
-
-Planned Features
-================
-Coming soon...
+That was basic API. features description coming soon... 
+-------------------------------------------------------
