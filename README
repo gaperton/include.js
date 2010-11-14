@@ -10,9 +10,9 @@ include.js relies on excellent require.js library as the backend.
 
 Features didgest
 ================
-1. Complete backward compatibility with CommonJS Asynchronous modules, packages, and require.js modules. Since it;s based on require.js.
-2. New module API, which is far easier to understand and use than original require.js one. Module definitions looks like module definitions, and inclide looks like traditional include.
-3. Plig-in API for custom modules with content of any type.
+1. Complete backward compatibility with CommonJS Asynchronous modules, packages, and require.js modules. Since it's based on require.js.
+2. New module API, which is far easier to understand and use than original require.js one. Module definitions looks like module definitions, and include looks like traditional include.
+3. Plug-in API for custom modules with content of any type.
 4. Plug-ins included:
 - HTML Templates, supporting ASP and mustache style tags, and JS embedding.
 - HAML Templates. I'm using github implementation, and it have not been tested yet. But - it was straightforward to add.
