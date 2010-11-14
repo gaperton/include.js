@@ -41,10 +41,25 @@ It's said, that Dojo Toolikit have better instruments for writing large AJAX app
 Comparison with require.js API
 ==============================
 require.js:
+define( function(){
+	...
+	return what_to_export; // looks pretty. However:
+				// - there are the mess of 'returns' in JS code - which one is export? 
+				// - it's always placed at the end of file.
+});
+
+include.js:
+$.define( function( _ ){
+	...
+	_.exports = what_to_export; // you can place it at the beginning, closer to the module interface.
+				// or - you can search for it. Or - you can still use require.js style.
+});
+
+require.js:
 	require( [ 'mod/one', 'mod/two', 'mod/three' ],
 		function( first, second, third ){ // try to make a change in this dependency list without mistake.
 			...
-			return what_we_have_defined; // there are the mess of 'returns' in JS code - which one is export?
+			return what_we_have_defined;
 		});
 		
 include.js:
@@ -55,7 +70,7 @@ include.js:
 	})
 	.define( function( _ ){
 		// you can refer to dependencies as _.first, _.second, _.third
-		_.exports = what_we_have_defined; // you may use this instead of return.
+		_.exports = what_we_have_defined;
 	});
 
 require.js: 
@@ -91,9 +106,76 @@ include.js:
 
 Yep, require.js is really the great library. Unfortunately, I can't use their API. Fingers refusing to type, man. :)
 
-That was basic API. features description coming soon... 
--------------------------------------------------------
+MVC, and using include.js with jQuery.
+======================================
+Suppose you're developing single-page ajax application. In this case, you have problem with growing mess in your single HTML page. I will show how to make it really simple with include.js, demonstrating implementation of MVC pattern. 
 
+Don't panic - MVC is performed _really_ simple in our case. Because, an only thing which is _really_ needed to perform MVC - is modules, and HTML template modules in particular. We have them, and this is enough.
+
+1. Model - is you data. Model can be trivialy decomposed to modules, as shown above.
+
+2. View - is the _file_ with HTML template. This file can be _included_ as regular module, under 'html' name. On inclusion, it will be compiled to JS function. Function take context, and expands the template returning HTML. It looks like this.
+
+$.include({
+	html: "template.html"
+	model : "model"
+})
+.define( function( _ ){
+...
+	var plain_html = _.html( _.model.query_data() ); 
+...
+});
+
+Yes, you can include multiple tempates at once. You need to specify an object with name-path pairs instead of string in 'html' property. And - then access them as _.html.yourFile. See an example for detailed templates explanation. 
+
+3. Controller. This is the module, including Model, View, attaching event handling, and performing DOM manipulation in order to insert template instance to HTML document. It looks like this:
+
+$.include({
+	html: "template.html"
+	model : "model"
+})
+.define( function( _ ){
+	_.exports = function( $this, a_data, a_events ){
+		function update(){
+			// taking context out of model...
+			var context = _.model.query_data( a_data );
+			_.model.on_update( update ); // subscribe for model updates...
+			
+			// render template, inserting instance to $this jQuery object.
+			_.html.renderTo( $this, context ); // yes, we support jQuery!
+			
+			// attach event handlers
+			$this.find( '#ok' ).click( a_events.on_ok ); // ok - pass to the caller.
+			$this.find( '#refresh ).click( update ); // We know how to process this event. We update ourself.
+		}
+
+		update();
+
+		return {
+			force_update : update; // return control interface to caller. Rarely needed, but important. 
+		};
+	}
+});
+
+So, how you design your application? Answer is simple. You decompose it to the hierarchy of controllers. Controllers include views, as HTML templates, and other controllers. Controller function in all cases do the dame things:
+1) Prepare context talking to the model.
+2) Render view.
+3) Attach events to its templates instance.
+4) Render included controllers
+5) Return control object, if necessary.
+
+Ok, _what_ is controller? It's plain function of the following kind:
+function( root_DOM_node, data_or_parameters, callbacks ) -> control_object | undefined.
+
+root_DOM_node: this is jQuery object, controller-view should be placed inside. It's responsibility of controller to perform all DOM manipulations required until the return;
+
+data_or_parameters: if controller takes any data or parameters, it will be the second argument. Controller knows, how to process them;
+
+callbacks: set of callbacks for event processing. Controller can pass some events up to the controllers tree.
+
+control_object: in case some external control for controller instance is needed, this is the way how you achieve it. 
+
+That's it. And if you don't think that this is an easiest way to do MVC ever, please, write me a letter. I'm really curious what can be easier.
 
 How can I try it?
 =================
