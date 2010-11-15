@@ -1,4 +1,5 @@
 // Copyright 2010, Vlad Balin aka "Gaperton".
+// 'compileSection' function is based on John Resig's microtemplating blog post.
 // Dual licensed under the MIT or GPL Version 2 licenses.
 
 // Core Templates plugin
