@@ -7,12 +7,14 @@
 	<title>Include.js test</title>
 	<meta name="author" content="Vlad Balin">
 	<script type="text/javascript" src="lib/requireplugins-jquery-1.4.3.js"></script>
+	<script type="text/javascript" src="lib/split.js"></script>
 	<script type="text/javascript" src="include.js"></script>
 	<script type="text/javascript" src="plugins/templates.js"></script>
 	
 	<script type="text/javascript">
 	$.include.settings = {
-	    baseUrl : "/include.js", //set path to the project web root here...
+	    baseUrl : "/include.js", //it is assumed that include.js is accessible from this path on your webserver,
+                                 //i.e. current file is accessible as http://[host]/include.js/test.html
 		html : { root: "html/" } //html templates root directory...
 	};
 
@@ -20,7 +22,7 @@
 		view : 'views/main'
 	})
 	.main( function( _ ){
-		_.view().$body.appendTo( 'body' );
+		_.view($('body'));
 	});	
 	</script>
 </head>
