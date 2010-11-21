@@ -20,7 +20,7 @@
 		view : 'views/main'
 	})
 	.main( function( _ ){
-		_.view().$body.appendTo( 'body' );
+		_.view().renderTo( $('body') );
 	});	
 	</script>
 </head>
